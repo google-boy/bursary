@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'bursary_online.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bursary_dev',
+        'USER': 'devteam',
+        'PASSWORD': 'secure_password',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
