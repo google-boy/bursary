@@ -5,6 +5,7 @@ import django.db.models.deletion
 import phonenumber_field.modelfields
 import tree.fields
 import tree.models
+from tree.operations import CreateTreeTrigger
 
 
 class Migration(migrations.Migration):
@@ -12,6 +13,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('tree', '0001_initial'),
     ]
 
     operations = [
@@ -188,4 +190,5 @@ class Migration(migrations.Migration):
                 ('student', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='bursary_app.applicant')),
             ],
         ),
+        CreateTreeTrigger('bursary_app.Residence')
     ]
