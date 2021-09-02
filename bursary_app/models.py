@@ -94,7 +94,7 @@ class Residence(models.Model, TreeModelMixin):
     Model for residential details.
     """
     name = models.CharField('Administrative unit', max_length=100)
-    top =  models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    parent =  models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     path = PathField()
 
 

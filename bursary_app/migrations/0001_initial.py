@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100, verbose_name='Administrative unit')),
                 ('path', tree.fields.PathField()),
-                ('top', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bursary_app.residence')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bursary_app.residence')),
             ],
             bases=(models.Model, tree.models.TreeModelMixin),
         ),
