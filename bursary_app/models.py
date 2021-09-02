@@ -26,18 +26,18 @@ class Applicant(models.Model):
         return f'{self.birth_cert_number}'
 
 class ParentalStatus(models.Model):
-    applicant = models.ForeignKey(Applicant, on_delete=models.SET_NULL)
-    parent = models.ForeignKey('Parent', on_delete=models.SET_NULL)
+    applicant = models.ForeignKey(Applicant, on_delete=models.RESTRICT)
+    parent = models.ForeignKey('Parent', null=True, on_delete=models.SET_NULL)
     parental_status = models.CharField(max_length=50)
     relationship = models.CharField(max_length=50)
 
 class ApplicantResidence(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.RESTRICT)
-    residence = models.ForeignKey('Residence', on_delete=models.SET_NULL)
+    residence = models.ForeignKey('Residence', null=True, on_delete=models.SET_NULL)
 
 class ApplicantInstitution(models.Model):
-    student = models.ForeignKey(Applicant, on_delete=models.CASCADE)
-    institution = models.ForeignKey('LearningInstitution', on_delete=models.SET_NULL)
+    student = models.ForeignKey(Applicant, on_delete=models.RESTRICT)
+    institution = models.ForeignKey('LearningInstitution', null=True, on_delete=models.SET_NULL)
     year_of_study = models.PositiveIntegerField()
 
 class Parent(models.Model):
@@ -62,7 +62,7 @@ class Parent(models.Model):
 
 class ParentAddress(models.Model):
     parent = models.ForeignKey(Parent, on_delete=models.CASCADE)
-    address = models.ForeignKey('Address', on_delete=models.SET_NULL)
+    address = models.ForeignKey('Address', on_delete=models.CASCADE)
 
 class ParentContact(models.Model):
     parent = models.ForeignKey(Parent, on_delete=models.CASCADE)
@@ -74,13 +74,14 @@ class Sibling(models.Model):
     """
     birth_cert_number = models.CharField(
         'Birth certificate number',
+        max_length=20
     )
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     other_name = models.CharField(max_length=100, null=True, blank=True)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=6)
-    learning_institution = models.ForeignKey('LearningInstitution', on_delete=models.SET_NULL)
+    learning_institution = models.ForeignKey('LearningInstitution', null=True, on_delete=models.SET_NULL)
     admission_no = models.CharField(max_length=50)
     applicant = models.ManyToManyField(Applicant)
 
@@ -92,7 +93,7 @@ class Residence(models.Model, TreeModelMixin):
     """
     Model for residential details.
     """
-    residence = models.CharField(max_length=100)
+    name = models.CharField('Administrative unit', max_length=100)
     top =  models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     path = PathField()
 
@@ -122,11 +123,11 @@ class Bank(models.Model):
 
 class InstitutionAddress(models.Model):
     institution = models.ForeignKey(LearningInstitution, on_delete=models.CASCADE)
-    address = models.ForeignKey('Address', on_delete=models.SET_NULL)
+    address = models.ForeignKey('Address', null=True, on_delete=models.SET_NULL)
 
 class InstitutionContact(models.Model):
     institution = models.ForeignKey(LearningInstitution, on_delete=models.CASCADE)
-    contact = models.ForeignKey('Contact', on_delete=models.SET_NULL)
+    contact = models.ForeignKey('Contact', null=True, on_delete=models.SET_NULL)
 
 class Address(models.Model):
     """
