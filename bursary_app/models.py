@@ -93,9 +93,12 @@ class Residence(models.Model, TreeModelMixin):
     """
     Model for residential details.
     """
-    name = models.CharField('Administrative unit', max_length=100)
+    name = models.CharField('Name of administrative unit', max_length=100)
     parent =  models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     path = PathField()
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class LearningInstitution(models.Model):
