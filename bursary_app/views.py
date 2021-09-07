@@ -4,4 +4,4 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return HttpResponse('Welcome to Bursary-Online homepage')
+    return render(request, 'bursary_app/index.html')
