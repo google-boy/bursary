@@ -10,6 +10,24 @@
 	</head>
 
 	<body class="bg-grey-lightest font-serif leading-normal tracking-normal">
+		<header>
+			{% block header %}
+        <div class="container flex">
+          <div>
+            <a href="">
+              <img src="" alt="site logo">
+            </a>
+            <h1>
+              <a href="">Bursary-Online</a>
+            </h1>
+          </div>
+          <div class="">
+            <a href="">Register</a>
+            <a href="">Log In</a>
+          </div>
+        </div>
+      {% endblock %}
+		</header>
 		{% block content %}
 			<div class="container mx-auto">
 				<section class="flex items-center justify-center h-screen">
