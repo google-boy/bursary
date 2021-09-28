@@ -97,9 +97,23 @@ class Residence(models.Model, TreeModelMixin):
     """
     Model for residential details.
     """
-    name = models.CharField('Name of administrative unit', max_length=100)
+    ADMINISTRATIVE_UNITS = [
+        ('county', 'County'),
+        ('subc', 'Sub County'),
+        ('ward', 'Ward'),
+        ('cvu', 'County Village Unit'),
+        ('subl', 'Sub location')
+    ]
+
+    name = models.CharField('Name of administrative area', max_length=100)
     parent =  models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    path = PathField()
+    unit = models.CharField(
+        max_length=150, choices=ADMINISTRATIVE_UNITS, default=ADMINISTRATIVE_UNITS[0]
+    )
+    path = PathField(order_by=['unit', 'name'])
+
+    class Meta:
+        ordering = ('path', )
 
     def __str__(self) -> str:
         return self.name
