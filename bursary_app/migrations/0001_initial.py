@@ -21,7 +21,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        CreateTreeTrigger('bursary_app.Residence'),
         migrations.CreateModel(
             name='Address',
             fields=[
@@ -220,4 +219,5 @@ class Migration(migrations.Migration):
                 ('objects', django.contrib.auth.models.UserManager()),
             ],
         ),
+        CreateTreeTrigger('bursary_app.Residence'),
     ]
