@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <form action="{% url 'login' %}" method="post" class="p-16">
+    {% csrf_token %}
+    {{ form.username.label_tag }}
+    {{ form.username }}</br>
+    {{ form.password.label_tag }}
+    {{ form.password }}
+    <input type="submit" value="Login" class="mt-8">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+{% endblock %}
