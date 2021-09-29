@@ -223,6 +223,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    is_applicant = models.BooleanField(
+        _('applicant'),
+        default=False,
+        help_text=_(
+            'Designates this user as an applicant. '
+            'Once true this status should not be changed. '
+        )
+    )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
