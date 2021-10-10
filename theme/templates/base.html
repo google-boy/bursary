@@ -24,8 +24,20 @@
             </h1>
           </div>
           <div class="md:justify-self-end p-2">
-            <a href="{% url 'bursary_app:login' %}" class="md:p-2">Register</a>
-            <a href="{% url 'bursary_app:login' %}" class="md:p-2">Log In</a>
+            {% if user.is_authenticated %}
+              <ul>
+                <li>
+                  Logged in as: 
+                  <a href="">{{ user.get_username }}</a>
+                </li>
+                <li>
+                  Logout
+                </li>
+              </ul>
+            {% else %}
+              <a href="{% url 'bursary_app:login' %}" class="md:p-2">Register</a>
+              <a href="{% url 'bursary_app:login' %}" class="md:p-2">Log In</a>
+            {% endif %}
           </div>
           <div class="block md:hidden justify-self-end">
             <button class="flex items-center px-4 py-3 border rounded text-teal-500 border-teal-500 focus:outline-none">
