@@ -13,6 +13,9 @@ class LoginView(auth_views.LoginView):
     template_name = 'bursary_app/login.html'
     authentication_form = ApplicantAuthenticationForm
 
+class LogoutView(auth_views.LogoutView):
+    next_page = 'bursary_app:index'
+
 class ApplicantCreateView(LoginRequiredMixin, CreateView):
     model = Applicant
     fields = [

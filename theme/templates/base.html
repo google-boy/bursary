@@ -31,7 +31,7 @@
                   <a href="">{{ user.get_username }}</a>
                 </li>
                 <li>
-                  Logout
+                  <a href="{% url 'bursary_app:logout' %}">Logout</a>
                 </li>
               </ul>
             {% else %}
