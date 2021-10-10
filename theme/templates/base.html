@@ -15,17 +15,17 @@
 			{% block header %}
         <div class="container flex md:grid md:grid-cols-3 md:auto-cols-min">
           <div class="inline-flex md:col-span-2">
-            <a href="" class="p-2">
+            <a href="{% url 'bursary_app:index' %}" class="p-2">
               <img src="{% static 'theme/images/workflow-logo.png' %}" alt="site logo" 
                 class="object-scale-down h-8 w-full">
             </a>
             <h1 class="p-2">
-              <a href="">Bursary-Online</a>
+              <a href="{% url 'bursary_app:index' %}">Bursary-Online</a>
             </h1>
           </div>
           <div class="md:justify-self-end p-2">
-            <a href="" class="md:p-2">Register</a>
-            <a href="" class="md:p-2">Log In</a>
+            <a href="{% url 'bursary_app:login' %}" class="md:p-2">Register</a>
+            <a href="{% url 'bursary_app:login' %}" class="md:p-2">Log In</a>
           </div>
           <div class="block md:hidden justify-self-end">
             <button class="flex items-center px-4 py-3 border rounded text-teal-500 border-teal-500 focus:outline-none">
