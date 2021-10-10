@@ -14,6 +14,7 @@ class Applicant(models.Model):
     """
     Model for student basic details.
     """
+    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
     birth_cert_number = models.CharField(
         'Birth certificate number',
         primary_key=True,
