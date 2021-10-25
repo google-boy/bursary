@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 from tree.fields import PathField
 from tree.models import TreeModelMixin
@@ -14,7 +15,7 @@ class Applicant(models.Model):
     """
     Model for student basic details.
     """
-    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     birth_cert_number = models.CharField(
         'Birth certificate number',
         primary_key=True,
