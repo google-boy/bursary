@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 # Bursary app forms
 class ApplicantRegisterForm(UserCreationForm):
     """
-    A form that create a an applicant as a user of the system.
+    A form that creates an applicant as a user of the system.
     """
     class Meta(UserCreationForm.Meta):
         model = CustomUser
