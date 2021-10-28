@@ -1,24 +1,27 @@
-from django.forms import forms, ValidationError
-from django import forms
+from django.db import transaction
+from django.forms import ValidationError
+from bursary_app.models import Applicant, CustomUser
 from django.contrib.auth.forms import(
-    AuthenticationForm,
+    AuthenticationForm, UserCreationForm
 )
-from django.forms.widgets import Widget
 from django.utils.translation import gettext_lazy as _
 
 # Bursary app forms
-class ApplicantRegisterForm(forms.Form):
-    username = forms.CharField(label='Birth Certificate Number', max_length=150)
-    first_name = forms.CharField(label='First Name', max_length=150)
-    last_name = forms.CharField(label='Last Name', max_length=150)
-    password = forms.CharField(label='Create Password', max_length=150, widget=forms.PasswordInput)
-    password_2 = forms.CharField(label='Repeat Password', max_length=150, widget=forms.PasswordInput)
+class ApplicantRegisterForm(UserCreationForm):
+    """
+    A form that create a an applicant as a user of the system.
+    """
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name')
 
-class CustomUserCreationForm(forms.Form):
-    pass
-
-class CustomUserUpdateform(forms.Form):
-    pass
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_applicant = True
+        user.save()
+        #Applicant.objects.create(user=user)
+        return user
 
 class ApplicantAuthenticationForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
