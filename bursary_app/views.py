@@ -1,25 +1,28 @@
-from django.shortcuts import render
-from django.contrib.auth import views as auth_views
-from django.views.generic.base import TemplateView, View
+from django.http.response import HttpResponse
+from django.shortcuts import redirect, render
+from django.contrib.auth import login, views as auth_views
 from  django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bursary_app.models import Applicant
+from bursary_app.models import Applicant, CustomUser
 from bursary_app.forms import ApplicantAuthenticationForm, ApplicantRegisterForm
 # Create your views here.
 
 def index(request):
     return render(request, 'index.html')
 
-class ApplicantRegisterView(View):
-    template_name = 'bursary_app/register.html'
+class ApplicantRegisterView(CreateView):
+    model = Applicant
     form_class = ApplicantRegisterForm
+    template_name = 'bursary_app/register.html'
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        ...
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'applicant'
+        return super().get_context_data(**kwargs)
+        
+    def form_valid(self, form):
+        user =form.save()
+        login(self.request, user)
+        return redirect('bursary_app: dashboard')
 
 class LoginView(auth_views.LoginView):
     template_name = 'bursary_app/login.html'
