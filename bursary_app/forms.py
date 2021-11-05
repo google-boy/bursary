@@ -1,4 +1,6 @@
+from django import forms
 from django.db import transaction
+from django.db.models import fields
 from django.forms import ValidationError
 from bursary_app.models import Applicant, CustomUser
 from django.contrib.auth.forms import(
@@ -7,6 +9,20 @@ from django.contrib.auth.forms import(
 from django.utils.translation import gettext_lazy as _
 
 # Bursary app forms
+
+class ApplicantAuthenticationForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        if user.is_staff:
+            raise ValidationError(
+                _('Staff accounts are not allowed to login here'),
+                code='no_staff_accounts'
+            )
+
+class ApplicantEditForm(forms.ModelForm):
+    class Meta:
+        model = Applicant
+        fields = '__all__'
+
 class ApplicantRegisterForm(UserCreationForm):
     """
     A form that creates an applicant as a user of the system.
@@ -22,11 +38,3 @@ class ApplicantRegisterForm(UserCreationForm):
         user.save()
         #Applicant.objects.create(user=user)
         return user
-
-class ApplicantAuthenticationForm(AuthenticationForm):
-    def confirm_login_allowed(self, user):
-        if user.is_staff:
-            raise ValidationError(
-                _('Staff accounts are not allowed to login here'),
-                code='no_staff_accounts'
-            )
