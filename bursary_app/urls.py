@@ -7,6 +7,6 @@ urlpatterns = [
     path('applicant/dashboard', views.dashboard, name='dashboard'),
     path('applicant/register', views.ApplicantRegisterView.as_view(), name='register'),
     path('applicant/login', views.LoginView.as_view(), name='login'),
-    path('applicant/profile', views.ApplicantCreateView.as_view(), name='profile'),
+    path('applicant/profile/edit', views.ApplicantCreateView.as_view(), name='edit_profile'),
     path('applicant/logout', views.LogoutView.as_view(), name='logout'),
 ]
