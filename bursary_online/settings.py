@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom user authentication/authorization
 
 AUTH_USER_MODEL = 'bursary_app.CustomUser'
-LOGIN_REDIRECT_URL = '/applicant/dashboard'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 # Tailwind config
 TAILWIND_APP_NAME = 'theme'
