@@ -1,11 +1,13 @@
+from django.http import request
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, views as auth_views
+from django.views.generic.detail import DetailView
 from  django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from bursary_app.models import Applicant, CustomUser
-from bursary_app.forms import ApplicantAuthenticationForm, ApplicantRegisterForm
+from bursary_app.forms import ApplicantAuthenticationForm, ApplicantEditForm, ApplicantRegisterForm
 # Create your views here.
 
 @login_required
@@ -30,7 +32,7 @@ class ApplicantRegisterView(CreateView):
     def form_valid(self, form):
         user =form.save()
         login(self.request, user)
-        return redirect('bursary_app:profile')
+        return redirect('bursary_app:edit_profile')
 
 class LoginView(auth_views.LoginView):
     """
@@ -43,16 +45,21 @@ class LogoutView(auth_views.LogoutView):
     """Applicant logout view"""
     next_page = 'bursary_app:index'
 
+class ApplicantProfileView(LoginRequiredMixin, DetailView):
+    model = CustomUser
+    template_name = 'bursary_app/applicant_profile'
+
+    def get_queryset(self):
+        return Applicant.objects.get_or_create(user=self.request.user)
+    
+    
+
 class ApplicantCreateView(LoginRequiredMixin, CreateView):
     """Applicant creation"""
     model = Applicant
-    fields = [
-        'birth_cert_number',
-        'admission_no',
-        'id_number',
-        'first_name',
-        'last_name',
-        'other_name',
-        'date_of_birth',
-        'gender'
-    ]
+    form_class = ApplicantEditForm
+    template_name = 'bursary_app/applicant_form.html'
+
+    def get_queryset(self):
+        return Applicant.objects.get_or_create(user=self.request.user)
+        
